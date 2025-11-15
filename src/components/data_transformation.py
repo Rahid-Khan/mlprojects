@@ -38,7 +38,7 @@ class DataTransformation:
             num_pipline = Pipeline(
                 steps=[
                     ('imputer', SimpleImputer(strategy='median')),
-                    ('sclare', StandardScaler())
+                    ('scaler', StandardScaler())
                 ]
                
             )
@@ -70,7 +70,7 @@ class DataTransformation:
             logging.info("obtainig preprocessor object")
             preprocessing_object = self.get_data_transformation_object()
             target_column_name = "math_score"
-            numerical_columns= ["writing_score", "reading_Score"]
+            numerical_columns= ["writing_score", "reading_score"]
             
             input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
             target_feature_train_df = train_df[target_column_name]
@@ -84,8 +84,8 @@ class DataTransformation:
             inpute_feature_train_arr= preprocessing_object.fit_transform(input_feature_train_df)
             inpute_feature_test_arr= preprocessing_object.transform(input_feature_test_df)
 
-            train_arr = np.c_[input_feature_train_df, np.array(target_feature_train_df)]
-            test_arr = np.c_[input_feature_test_df, np.array(target_feature_test_df)]
+            train_arr = np.c_[inpute_feature_train_arr, np.array(target_feature_train_df)]
+            test_arr = np.c_[inpute_feature_test_arr, np.array(target_feature_test_df)]
             
             logging.info("saving preprocess object")
             
